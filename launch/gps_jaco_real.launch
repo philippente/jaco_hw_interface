@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="badmm" default="false"/>
+
+    <!-- send jaco urdf to param server -->
+    <include file="$(find jaco_gazebo)/launch/jaco_upload.launch">
+	<arg name="hardware_interface" value="EffortJointInterface"/>
+	<arg name="badmm" value="$(arg badmm)"/>
+    </include>
+
+    <!-- start real robot interface -->
+    <node name="jaco_hw_interface" pkg="jaco_hw_interface" type="jaco_hw_interface" output="screen"/>
+
+    <!-- start controller -->
+    <include file="$(find jaco_hw_interface)/launch/gps_jaco_controller.launch" />
+
+</launch>

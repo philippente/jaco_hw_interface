@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+    <param name="JACOArmPlugin/type" value="gps_agent_pkg/JACOArmPlugin" />
+
+    <!-- controller params -->
+    <rosparam command="load" file="$(find jaco_hw_interface)/config/gps_jaco_controller.yaml" />
+    <param name="JACOArmPlugin/active_root_name" value="jaco_link_base" />
+    <param name="JACOArmPlugin/active_tip_name" value="jaco_link_hand" />
+    <param name="JACOArmPlugin/control_frequency" value="20" />
+
+    <!-- kalman filter matrices -->
+    <param name="JACOArmPlugin/encoder_filter_params"
+	   textfile="$(find jaco_hw_interface)/config/encoder_filter_params.txt" />
+
+    <!-- Spawn Controller  -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner"
+          args="JACOArmPlugin" 
+	  output="screen"/>
+
+</launch>
